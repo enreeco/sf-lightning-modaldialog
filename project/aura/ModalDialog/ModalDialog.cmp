@@ -1,0 +1,65 @@
+<aura:component >
+    <ltng:require styles="/resource/SLDS104/assets/styles/salesforce-lightning-design-system-ltng.css"
+			afterScriptsLoaded="{!c.doInit}"/>
+            
+    <aura:attribute name="type" type="String" 
+                    description="Kind of dialog: ALERT, CONFIRM, INPUT, LOADER" required="true" default="ALERT" />
+    <aura:attribute name="title" type="String" 
+                    description="Dialog title" required="true" />
+    <aura:attribute name="content" type="String" 
+                    description="Dialog content text" required="true"  />
+    <aura:attribute name="context" type="Object" 
+                    description="Object containing generic context to be sent back to the callback" required="false"  />
+    <aura:attribute name="inputValue" type="String" 
+                    description="Input value for INPUT type" required="false" default=""  />
+    <aura:attribute name="inputPlaceholder" type="String" 
+                    description="Input placeholder for INPUT type" required="false"  />
+    <aura:attribute name="showDialog" type="Boolean" 
+                    description="Shows the dialog" required="true"  />
+    <aura:registerEvent name="onClose" type="c:ModalDialogCloseEvt"/>
+
+    <aura:handler name="change" value="{!v.inputValue}" action="{!c.onInputValueChange}"/>
+	<aura:handler name="change" value="{!v.showDialog}" action="{!c.onShowDialogValueChange}"/>
+
+    <div class="slds">
+		<div aura:id="theModal" class="{!'slds-modal '+((v.showDialog)?'slds-fade-in-open':'slds-fade-in-close')}" aria-hidden="true" role="dialog">
+			<div class="slds-modal__container">
+				<div class="slds-modal__header">
+					<h2 class="slds-text-heading--medium">{!v.title}</h2>
+					<aura:renderIf isTrue="{!v.type == 'LOADER'}">
+						 <div style="margin-top:30px;" class="slds-spinner--brand slds-spinner slds-spinner--small" aria-hidden="false" role="alert">
+                          <div class="slds-spinner__dot-a"></div>
+                          <div class="slds-spinner__dot-b"></div>
+                        </div>
+					</aura:renderIf>
+				</div>
+				<aura:renderIf isTrue="{!not(empty(v.content))}">
+					<div class="slds-modal__content slds-p-around--medium">
+						<div style="text-align:center;">
+							<p><aura:unescapedHtml value="{!v.content}" /></p>
+							<aura:renderIf isTrue="{!v.type == 'INPUT'}">
+								<ui:inputText value="{!v.inputResult}" class="slds-input" placeholder="{!v.inputPlaceholder}"/>
+							</aura:renderIf>
+						</div>
+					</div>
+				
+					<div class="slds-modal__footer slds-modal__footer--directional">
+						<aura:renderIf isTrue="{!v.type == 'ALERT'}">
+							<span />
+							<button class="slds-button slds-button--neutral " onclick="{!c.closeModal}">Close</button>
+						</aura:renderIf>
+						<aura:renderIf isTrue="{!v.type == 'CONFIRM'}">
+							<button class="slds-button slds-button--neutral " onclick="{!c.closeModal}">No</button>
+							<button class="slds-button slds-button--brand " onclick="{!c.closeModalYes}">Yes</button>
+						</aura:renderIf>
+						<aura:renderIf isTrue="{!v.type == 'INPUT'}">
+							<button class="slds-button slds-button--neutral " onclick="{!c.closeModal}">Cancel</button>
+							<button class="slds-button slds-button--brand " onclick="{!c.closeModalInput}">Ok</button>
+						</aura:renderIf>
+					</div>
+				</aura:renderIf>
+			</div>
+		</div>
+		<div aura:id="theBackdrop" class="{!'slds-backdrop '+((v.showDialog)?'slds-backdrop--open':'slds-backdrop--close')}"></div>  
+	</div>
+</aura:component>

@@ -4,14 +4,14 @@
         var confirmResult = event.getParam('confirmResult');
         var inputResult = event.getParam('inputResult');
         var dialogType = event.getParam('dialogType');
-        
+        console.log(event.getParams());
         component.set('v.dialogResult', confirmResult);
         component.set('v.dialogInputResult', inputResult);
         component.set('v.dialogStatus',(context)?context.action:dialogType);
         
     },
     showAlert: function(component, event, helper) {
-        $A.run(function(){
+
             helper.showDialog(component, 'ALERT', 
                               'THIS IS AN ALERT!',
                               'Hello world!',
@@ -21,11 +21,10 @@
                                   action: helper.C.ACTIONS.SHOW_ALERT
                               },
                               true);
-        });
+       
     },
     
     showConfirm: function(component, event, helper) {
-        $A.run(function(){
             helper.showDialog(component, 'CONFIRM', 
                               'CONFIRM',
                               'Do you want to do this?',
@@ -35,10 +34,10 @@
                                   action: helper.C.ACTIONS.SHOW_CONFIRM
                               },
                               true);
-        });
+
     },
     showLoader: function(component, event, helper) {
-        $A.run(function(){
+
             helper.showDialog(component, 'LOADER', 
                               'Loading...',
                               'Data is loading...',
@@ -48,16 +47,16 @@
                                   action: helper.C.ACTIONS.SHOW_LOADER
                               },
                               true);
-        });
+    
         //simulates elaboration. . .
         setTimeout(function(){
-            $A.run(function(){
+        
                 component.set('v.showDialog', false);
-            }); 
+      
         }, 2000);
     },
     showInput: function(component, event, helper) {
-        $A.run(function(){
+        
             helper.showDialog(component, 'INPUT', 
                               'INPUT DIALOG',
                               'Hello!',
@@ -67,6 +66,6 @@
                                   action: helper.C.ACTIONS.SHOW_INPUT
                               },
                               true);
-        });
+    
     },
 })

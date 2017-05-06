@@ -16,11 +16,13 @@
                     description="Input placeholder for INPUT type" required="false"  />
     <aura:attribute name="showDialog" type="Boolean" 
                     description="Shows the dialog" required="true"  />
+    <aura:attribute name="inputResult" type="String" 
+                    description="Input value for INPUT textbox" required="false" default=""  />
     <aura:registerEvent name="onClose" type="c:ModalDialogCloseEvt"/>
 
     <aura:handler name="change" value="{!v.inputValue}" action="{!c.onInputValueChange}"/>
 	<aura:handler name="change" value="{!v.showDialog}" action="{!c.onShowDialogValueChange}"/>
-
+	
     <div class="slds">
 		<div aura:id="theModal" class="{!'slds-modal '+((v.showDialog)?'slds-fade-in-open':'slds-fade-in-close')}" aria-hidden="true" role="dialog">
 			<div class="slds-modal__container">

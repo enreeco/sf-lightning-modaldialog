@@ -1,5 +1,30 @@
 <aura:application >
+    
     <ltng:require styles="/resource/SLDS104/assets/styles/salesforce-lightning-design-system-ltng.css"/>
+    
+    <aura:attribute name="dialogType" type="String" 
+                    description="Kind of dialog: ALERT, CONFIRM, INPUT, LOADER" 
+                    default="ALERT" />
+    <aura:attribute name="dialogTitle" type="String" 
+                    description="Dialog title" 
+                    default="Title"/>
+    <aura:attribute name="dialogContent" type="String" 
+                    description="Dialog content text" 
+                    default="Content"/>
+    <aura:attribute name="dialogContext" type="Object" 
+                    description="Object containing generic context to be sent back to the callback" 
+                    default="{}"/>
+    <aura:attribute name="dialogInputPlaceholder" type="String" 
+                    description="Input placeholder for INPUT type" 
+                    default=""/>
+    <aura:attribute name="showDialog" type="Boolean" 
+                    description="Shows the dialog" 
+                    default="false"/>
+    <aura:attribute name="dialogResult" type="String"  />
+    <aura:attribute name="dialogStatus" type="String" />
+    <aura:attribute name="dialogInputResult" type="String" />
+
+                        
     <div class="slds">
         <div class="slds-page-header" role="banner">
             <div class="slds-media">
@@ -47,6 +72,7 @@
         </table>
         
     </div><!-- .slds -->
+    
     
     <c:ModalDialog type="{!v.dialogType}" 
                    title="{!v.dialogTitle}" 
